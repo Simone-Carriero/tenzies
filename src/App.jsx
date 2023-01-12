@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
+import Confetti from 'react-confetti';
 import Die from './components/Die/Die';
 
 const App = () => {
@@ -29,12 +30,29 @@ const App = () => {
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
 
+  useEffect(() => {
+    const allSelected = dice.every((die) => die.isHeld);
+    const matchedValues = dice.every(
+      (die, i, arr) => die.value === arr[0].value
+    );
+
+    if (allSelected && matchedValues) {
+      setTenzies(true);
+    }
+  }, [dice]);
+
   const rollDice = () => {
-    setDice((die) =>
+    if(!tenzies) {
+      setDice((die) =>
       die.map((die) => {
         return die.isHeld ? die : generateNewDie();
       })
     );
+    } else {
+      setDice(allNewDice())
+      setTenzies(false)
+    }
+    
   };
 
   const holdDice = (id) => {
@@ -47,10 +65,12 @@ const App = () => {
 
   return (
     <main className='main'>
+      {tenzies && <Confetti />}
       <h1 className='title'> Tenzies</h1>
       <p className='description'>
-        Roll until all dice are the same. Click each die to freeze it at its
-        current value between rolls.
+        {tenzies
+          ? 'You Win'
+          : 'Roll until all dice are the same. Click each die to freeze it at its current value between rolls.'}
       </p>
       <section className='grid-container'>
         {dice.map((die) => (
@@ -66,7 +86,7 @@ const App = () => {
         type='button'
         className='btn'
         onClick={rollDice}>
-        Roll
+        {tenzies ? 'New Game' : 'Roll'}
       </button>
     </main>
   );
