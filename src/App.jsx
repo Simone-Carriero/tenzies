@@ -40,13 +40,18 @@ const App = () => {
   const holdDice = (id) => {
     setDice((prevDice) =>
       prevDice.map((die) => {
-        return die.id === id ? {...die, isHeld: !die.isHeld} : die
+        return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
       })
     );
   };
 
   return (
     <main className='main'>
+      <h1 className='title'> Tenzies</h1>
+      <p className='description'>
+        Roll until all dice are the same. Click each die to freeze it at its
+        current value between rolls.
+      </p>
       <section className='grid-container'>
         {dice.map((die) => (
           <Die
