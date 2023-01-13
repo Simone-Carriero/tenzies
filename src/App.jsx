@@ -29,6 +29,37 @@ const App = () => {
 
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
+  const [scores, setScores] = useState({
+    seconds: 0,
+    minutes: 0,
+    rolls: 0,
+  });
+
+  // Start and stop the interval
+  useEffect(() => {
+    let intervalId;
+    // if !tenzies start the interval
+    if (!tenzies) {
+      intervalId = setInterval(() => {
+        // update the time state by incrementing seconds and minutes when needed
+        setScores((prevScores) => {
+          let newScores = { ...prevScores };
+          newScores.seconds++;
+          if (newScores.seconds === 60) {
+            newScores.minutes++;
+            newScores.seconds = 0;
+          }
+          return newScores;
+        });
+      }, 1000);
+    } else {
+      // if tenzies is true, stop the interval
+      clearInterval(intervalId);
+    }
+
+    // Cleanup function to stop the interval when component unmounts
+    return () => clearInterval(intervalId);
+  }, [tenzies, scores.seconds, scores.minutes]);
 
   useEffect(() => {
     const allSelected = dice.every((die) => die.isHeld);
@@ -42,17 +73,25 @@ const App = () => {
   }, [dice]);
 
   const rollDice = () => {
-    if(!tenzies) {
+    if (!tenzies) {
       setDice((die) =>
-      die.map((die) => {
-        return die.isHeld ? die : generateNewDie();
-      })
-    );
+        die.map((die) => {
+          return die.isHeld ? die : generateNewDie();
+        })
+      );
+      setScores((prevScores) => ({
+        ...prevScores,
+        rolls: scores.rolls + 1,
+      }));
     } else {
-      setDice(allNewDice())
-      setTenzies(false)
+      setDice(allNewDice());
+      setTenzies(false);
+      setScores({
+        seconds: 0,
+        minutes: 0,
+        rolls: 0,
+      });
     }
-    
   };
 
   const holdDice = (id) => {
@@ -69,9 +108,21 @@ const App = () => {
       <h1 className='title'> Tenzies</h1>
       <p className='description'>
         {tenzies
-          ? 'You Win'
+          ? `You rolls ${scores.rolls} time in ${
+              scores.minutes > 0
+                ? `${scores.minutes} minutes and ${scores.seconds} seconds`
+                : `${scores.seconds} seconds`
+            }`
           : 'Roll until all dice are the same. Click each die to freeze it at its current value between rolls.'}
       </p>
+      <section>
+        <h4 className='subtitle'>Your Time</h4>
+        <p className='time'>
+          {scores.minutes > 0 &&
+            `${scores.minutes < 10 ? '0' : ''}${scores.minutes} : `}{' '}
+          {scores.seconds}
+        </p>
+      </section>
       <section className='grid-container'>
         {dice.map((die) => (
           <Die
