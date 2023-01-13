@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import Confetti from 'react-confetti';
 import Die from './components/Die/Die';
+import Confetti from 'react-confetti';
+import useWindowSize from 'react-use/lib/useWindowSize';
 
 const App = () => {
   /* Functions for the dice */
@@ -34,6 +35,8 @@ const App = () => {
     minutes: 0,
     rolls: 0,
   });
+
+  const { width, height } = useWindowSize();
 
   // Start and stop the interval
   useEffect(() => {
@@ -104,7 +107,12 @@ const App = () => {
 
   return (
     <main className='main'>
-      {tenzies && <Confetti />}
+      {tenzies && (
+        <Confetti
+          width={width}
+          height={height}
+        />
+      )}
       <h1 className='title'> Tenzies</h1>
       <p className='description'>
         {tenzies
