@@ -10,7 +10,6 @@ body {
   display: grid;
   place-content: center;
   margin: 0;
-  padding: 2rem;
   min-height: 100vh;
   font-size: 1.6rem;
   background-color: #0b2434;
@@ -18,13 +17,15 @@ body {
 }
 
 .main {
+  width: 90vw;
+  margin: 0 auto;
+  max-width: 50rem;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   padding: 2rem;
-  height: 45rem;
-  max-width: 50rem;
   background-color: #f5f5f5;
   border-radius: 10px;
 }
@@ -50,10 +51,13 @@ body {
   font-size: 2rem;
 }
 
-.grid-container {
-  display: grid;
-  grid-template: auto auto / repeat(5, 1fr);
+.dice-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 2.8rem 2.5rem;
+  max-width: 40rem;
   margin-block-end: 2rem;
 }
 

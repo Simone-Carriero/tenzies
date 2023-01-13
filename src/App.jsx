@@ -123,7 +123,7 @@ const App = () => {
           {scores.seconds}
         </p>
       </section>
-      <section className='grid-container'>
+      <section className='dice-container'>
         {dice.map((die) => (
           <Die
             key={die.id}
