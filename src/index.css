@@ -28,6 +28,7 @@ body {
   padding: 2rem;
   background-color: #f5f5f5;
   border-radius: 10px;
+  text-align: center;
 }
 
 .title {
@@ -38,7 +39,6 @@ body {
 .description {
   margin-block-start: 0;
   max-width: 70%;
-  text-align: center;
 }
 
 .subtitle {
@@ -47,7 +47,6 @@ body {
 
 .time {
   margin-block-start: 0.4rem;
-  text-align: center;
   font-size: 2rem;
 }
 
