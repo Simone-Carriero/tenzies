@@ -54,8 +54,8 @@ const App = () => {
 
   const rollDice = () => {
     if (!tenzies) {
-      setDice((die) =>
-        die.map((die) => {
+      setDice((prevDie) =>
+        prevDie.map((die) => {
           return die.isHeld ? die : generateNewDie();
         })
       );
