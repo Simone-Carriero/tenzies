@@ -82,6 +82,15 @@ const App = () => {
     );
   };
 
+  // Create a message that displays the roll count and time spent with correct plural forms for minutes and seconds
+  const timeMessage = `You rolls ${scores.rolls} times in ${
+    scores.minutes > 0
+      ? `${scores.minutes} ${scores.minutes > 1 ? 'minutes' : 'minute'} and ${
+          scores.seconds
+        } ${scores.seconds > 1 ? 'seconds' : 'second'}`
+      : `${scores.seconds} seconds`
+  }`;
+
   return (
     <main className='main'>
       {tenzies && (
@@ -93,18 +102,16 @@ const App = () => {
       <h1 className='title'> Tenzies</h1>
       <p className='description'>
         {tenzies
-          ? `You rolls ${scores.rolls} time in ${
-              scores.minutes > 0
-                ? `${scores.minutes} minutes and ${scores.seconds} seconds`
-                : `${scores.seconds} seconds`
-            }`
+          ? timeMessage
           : 'Roll until all dice are the same. Click each die to freeze it at its current value between rolls.'}
       </p>
       <section>
         <h4 className='subtitle'>Your Time</h4>
+        {/* Display time in 00:00 format leading 0 is added for minutes and seconds if they are less than 10 */}
         <p className='time'>
           {scores.minutes > 0 &&
             `${scores.minutes < 10 ? '0' : ''}${scores.minutes} : `}{' '}
+          {scores.seconds < 10 ? '0' : ''}
           {scores.seconds}
         </p>
       </section>
