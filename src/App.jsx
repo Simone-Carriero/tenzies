@@ -4,6 +4,7 @@ import Die from './components/Die/Die';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import AllScores from './components/AllScores/AllScores';
+import BrowserConfig from './components/BrowserConfig';
 
 const App = () => {
   const [dice, setDice] = useState(allNewDice());
@@ -94,6 +95,7 @@ const App = () => {
 
   return (
     <main className='main'>
+      <BrowserConfig />
       <section className='game-container'>
         {tenzies && (
           <Confetti
