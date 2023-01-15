@@ -3,6 +3,7 @@ import { generateNewDie, allNewDice } from './utils/dice';
 import Die from './components/Die/Die';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
+import AllScores from './components/AllScores/AllScores';
 
 const App = () => {
   const [dice, setDice] = useState(allNewDice());
@@ -93,44 +94,54 @@ const App = () => {
 
   return (
     <main className='main'>
-      {tenzies && (
-        <Confetti
-          width={width}
-          height={height}
-        />
-      )}
-      <h1 className='title'> Tenzies</h1>
-      <p className='description'>
-        {tenzies
-          ? timeMessage
-          : 'Roll until all dice are the same. Click each die to freeze it at its current value between rolls.'}
-      </p>
-      <section>
-        <h4 className='subtitle'>Your Time</h4>
-        {/* Display time in 00:00 format leading 0 is added for minutes and seconds if they are less than 10 */}
-        <p className='time'>
-          {scores.minutes > 0 &&
-            `${scores.minutes < 10 ? '0' : ''}${scores.minutes} : `}{' '}
-          {scores.seconds < 10 ? '0' : ''}
-          {scores.seconds}
-        </p>
-      </section>
-      <section className='dice-container'>
-        {dice.map((die) => (
-          <Die
-            key={die.id}
-            value={die.value}
-            isHeld={die.isHeld}
-            holdDice={() => holdDice(die.id)}
+      <section className='game-container'>
+        {tenzies && (
+          <Confetti
+            width={width}
+            height={height}
           />
-        ))}
+        )}
+        <section className='intro-section'>
+          <h1 className='intro-section__title'>🎲 Tenzies</h1>
+          <p className='intro-section__description'>
+            {tenzies
+              ? timeMessage
+              : 'Roll until all dice are the same. Click each die to freeze it at its current value between rolls.'}
+          </p>
+        </section>
+
+        <section className='score-section'>
+          <h4 className='score-section__subtitle'>Your Time ⏰</h4>
+          {/* Display time in 00:00 format leading 0 is added for minutes and seconds if they are less than 10 */}
+          <p className='score-section__time'>
+            {scores.minutes > 0 &&
+              `${scores.minutes < 10 ? '0' : ''}${scores.minutes} : `}{' '}
+            {scores.seconds < 10 ? '0' : ''}
+            {scores.seconds}
+          </p>
+          {tenzies && <AllScores scores={scores} />}
+        </section>
+
+        <section className='dice-section'>
+          <div className='dice-container'>
+            {dice.map((die) => (
+              <Die
+                key={die.id}
+                value={die.value}
+                isHeld={die.isHeld}
+                holdDice={() => holdDice(die.id)}
+              />
+            ))}
+          </div>
+
+          <button
+            type='button'
+            className='btn'
+            onClick={rollDice}>
+            {tenzies ? 'New Game' : 'Roll'}
+          </button>
+        </section>
       </section>
-      <button
-        type='button'
-        className='btn'
-        onClick={rollDice}>
-        {tenzies ? 'New Game' : 'Roll'}
-      </button>
     </main>
   );
 };

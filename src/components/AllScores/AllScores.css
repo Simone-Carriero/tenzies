@@ -1,0 +1,15 @@
+.allScores__input {
+  padding-block: 0.5rem;
+  padding-inline: 0.5rem;
+  background: hsl(210, 36%, 96%);
+  border-radius: 0.25rem;
+  border-color: #ffffff;
+  letter-spacing: 0.1rem;
+}
+
+.allScores__list {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+}
