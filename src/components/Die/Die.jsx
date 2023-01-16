@@ -12,8 +12,10 @@ const Die = ({ value, isHeld, holdDice }) => {
   return (
     <div
       style={styles.background}
-      className={`die ${isHeld && 'die--selected'}`}
-      onClick={holdDice}></div>
+      className='die'
+      onClick={holdDice}>
+      {isHeld && <div className='die__background'></div>}
+    </div>
   );
 };
 
